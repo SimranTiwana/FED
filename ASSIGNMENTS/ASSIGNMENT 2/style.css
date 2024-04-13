@@ -1,0 +1,98 @@
+body {
+    padding: 50px;
+    background-color: #f8f9fa; /* Light gray background */
+    color: #333; /* Dark text color */
+}
+
+#thumbs {
+    margin-left: -6px;
+    margin-right: -6px;
+    overflow: hidden; /* Ensures no overflow on floated elements */
+}
+
+.img-wrapper {
+    float: left;
+    width: calc(33.33% - 12px); /* Adjust according to your grid */
+    padding: 6px;
+    box-sizing: border-box; /* Include padding in width calculation */
+    background-color: #fff; /* White background for image containers */
+    border-radius: 8px; /* Rounded corners for image containers */
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.1); /* Subtle shadow effect */
+}
+
+.inner {
+    height: 100%;
+    padding: 10px; /* Increased padding for better spacing */
+    border-radius: 6px;
+    border: 1px solid #e6e6e6;
+    display: flex; /* Use flexbox for centering */
+    align-items: center;
+    justify-content: center;
+    aspect-ratio: 16/9; 
+}
+
+.inner img {
+    display: block;
+    margin: 0 auto;
+    width: 95%; /* Make all images fill the width of their parent container */
+    height: 325px; /* Maintain aspect ratio */
+   
+}
+
+
+.loader-wrapper {
+    display: none;
+    position: fixed;
+    z-index: 20000;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    background: rgba(0, 0, 0, 0.5); /* Semi-transparent black background */
+}
+
+.loader-wrapper.shown {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.lds-circle {
+    display: inline-block;
+    transform: translateZ(1px);
+}
+
+.lds-circle > div {
+    width: 51px;
+    height: 51px;
+    margin: 6px;
+    border-radius: 50%;
+    background: #007bff; /* Blue color for loader dots */
+    animation: lds-circle 2.4s cubic-bezier(0, 0.2, 0.8, 1) infinite;
+}
+
+.btn-outline-secondary {
+    color: #007bff; /* Blue color for search button text */
+    border-color: #007bff; /* Blue border color for search button */
+}
+
+.btn-outline-secondary:hover {
+    background-color: #007bff; /* Blue background on hover */
+    color: #fff; /* White text color on hover */
+}
+
+@keyframes lds-circle {
+    0%, 100% {
+        animation-timing-function: cubic-bezier(0.5, 0, 1, 0.5);
+    }
+    0% {
+        transform: rotateY(0deg);
+    }
+    50% {
+        transform: rotateY(1800deg);
+        animation-timing-function: cubic-bezier(0, 0.5, 0.5, 1);
+    }
+    100% {
+        transform: rotateY(3600deg);
+    }
+}

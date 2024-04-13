@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Solez Shop</title>
+
+</head>
+<body>
+   <p> Name: Simran Kaur Tiwana <br/>Roll No: 2210997237</p>
+    <script> 
+        // Add CSS attribute directly to the document style
+        document.body.style.margin = '0';
+        document.body.style.padding = '0';
+        document.body.style.boxSizing = 'border-box';
+        document.body.style.fontFamily = "'poppins', sans-serif";
+        document.body.style.fontSize = '18px';
+        document.body.style.backgroundColor = '#f5f5f5';
+        document.body.style.padding = '20px';
+        document.body.style.display = 'flex';
+        document.body.style.flexDirection = 'row';
+        document.body.style.justifyContent = 'space-between';
+
+        const product = [
+            {
+                id: 0,
+                image: './virgil.jpg',
+                title: 'Jordan 4 Bred',
+                price: 150,
+            },
+            {
+                id: 1,
+                image: './chuck.jpg',
+                title: 'Chucks',
+                price: 80,
+            },
+            {
+                id: 2,
+                image: './unc.jpg',
+                title: 'Jordan 3',
+                price: 230,
+            },
+            {
+                id: 3,
+                image: './dior.jpg',
+                title: 'Air Dior',
+                price: 5000,
+            }
+        ];
+
+        function createProductElement(item, index) {
+            const productDiv = document.createElement('div');
+            productDiv.classList.add('box');
+            productDiv.style.backgroundColor = '#ffffff';
+            productDiv.style.border = '1px solid lightblue';
+            productDiv.style.borderRadius = '8px';
+            productDiv.style.width = '65%';
+            productDiv.style.transition = 'transform 0.3s ease-in-out';
+            productDiv.style.marginBottom = '20px';
+
+            const imgBox = document.createElement('div');
+            imgBox.classList.add('img-box');
+
+            const img = document.createElement('img');
+            img.classList.add('images');
+            img.src = item.image;
+            img.style.width = '100%'; // Ensure image fills its container
+            img.style.borderTopLeftRadius = '8px';
+            img.style.borderTopRightRadius = '8px';
+
+            imgBox.appendChild(img);
+
+            const bottomDiv = document.createElement('div');
+            bottomDiv.classList.add('bottom');
+            bottomDiv.style.padding = '10px';
+
+            const titlePara = document.createElement('p');
+            titlePara.textContent = item.title;
+
+            const priceHeading = document.createElement('h2');
+            priceHeading.textContent = `$ ${item.price}.00`;
+            priceHeading.style.color = 'red';
+            priceHeading.style.fontSize = '20px';
+            priceHeading.style.marginBottom = '5px';
+
+            bottomDiv.appendChild(titlePara);
+            bottomDiv.appendChild(priceHeading);
+
+            const addButton = document.createElement('button');
+            addButton.textContent = 'Add to Cart';
+            addButton.addEventListener('click', () => addtocart(index));
+            addButton.style.width = 'calc(100% - 20px)';
+            addButton.style.border = 'none';
+            addButton.style.borderRadius = '5px';
+            addButton.style.backgroundColor = 'lightblue';
+            addButton.style.padding = '10px 0';
+            addButton.style.cursor = 'pointer';
+            addButton.style.color = '#ffffff';
+            addButton.style.fontSize = '16px';
+            addButton.style.transition = 'background-color 0.3s ease-in-out';
+
+            addButton.addEventListener('mouseenter', () => {
+                addButton.style.backgroundColor = '#333';
+            });
+
+            addButton.addEventListener('mouseleave', () => {
+                addButton.style.backgroundColor = 'lightblue';
+            });
+
+            bottomDiv.appendChild(addButton);
+
+            productDiv.appendChild(imgBox);
+            productDiv.appendChild(bottomDiv);
+
+            return productDiv;
+        }
+
+        // Append product elements to container
+        const container = document.createElement('div');
+        container.classList.add('container');
+        container.style.display = 'grid';
+        container.style.gridTemplateColumns = 'repeat(2, 1fr)';
+        container.style.gridGap = '20px';
+        container.style.justifyContent = 'flex-start';
+        container.style.margin = '20px auto';
+        container.style.padding = '20px';
+        container.style.backgroundColor = '#f5f5f5';
+
+        product.forEach((item, index) => {
+            const productElement = createProductElement(item, index);
+            container.appendChild(productElement);
+        });
+
+        document.body.appendChild(container);
+
+        // Create sidebar
+        const sidebar = document.createElement('div');
+        sidebar.classList.add('sidebar');
+        sidebar.style.backgroundColor = '#eee';
+        sidebar.style.borderRadius = '5px';
+        sidebar.style.padding = '15px';
+        sidebar.style.textAlign = 'center';
+        sidebar.style.width = '65%'; 
+        sidebar.style.marginLeft = '20px';
+        sidebar.style.alignSelf = 'flex-start'; 
+
+        const logo = document.createElement('h1');
+        logo.classList.add('logo');
+        logo.textContent = 'Welcome to Solez for the ultimate experience!';
+        sidebar.appendChild(logo);
+
+        const cartHead = document.createElement('div');
+        cartHead.classList.add('head');
+        cartHead.textContent = 'My Cart';
+        cartHead.style.backgroundColor = 'lightblue';
+        cartHead.style.color = 'white';
+        cartHead.style.borderRadius = '3px';
+        cartHead.style.padding = '10px';
+        cartHead.style.textAlign = 'center';
+        cartHead.style.marginBottom = '20px';
+        sidebar.appendChild(cartHead);
+
+        const cartItems = document.createElement('div');
+        cartItems.classList.add('cartItems');
+        cartItems.textContent = 'Your cart is empty';
+        sidebar.appendChild(cartItems);
+
+        const totalLabel = document.createElement('div');
+        totalLabel.textContent = 'Total:';
+        totalLabel.style.marginBottom = '10px';
+        sidebar.appendChild(totalLabel);
+
+        const totalPrice = document.createElement('div');
+        totalPrice.classList.add('totalPrice');
+        totalPrice.textContent = '$ 0.00';
+        sidebar.appendChild(totalPrice);
+
+        document.body.appendChild(sidebar);
+
+        var cart = [];
+
+        function addtocart(index) {
+            cart.push(product[index]);
+            displaycart();
+        }
+
+        function delElement(index) {
+            cart.splice(index, 1);
+            displaycart();
+        }
+
+        function displaycart() {
+            let total = 0;
+            const cartElement = document.querySelector(".sidebar .cartItems");
+
+            cartElement.innerHTML = '';
+
+            cart.forEach((item, index) => {
+                total += item.price;
+
+                const cartItemDiv = document.createElement('div');
+                cartItemDiv.classList.add('cart-item');
+
+                const img = document.createElement('img');
+                img.src = item.image;
+                img.alt = 'product-image';
+                img.style.width = '40px';
+                img.style.height = '40px';
+                img.style.borderRadius = '50%';
+                img.style.objectFit = 'cover';
+                cartItemDiv.appendChild(img);
+
+                const titlePara = document.createElement('p');
+                titlePara.textContent = item.title;
+                cartItemDiv.appendChild(titlePara);
+
+                const priceHeading = document.createElement('h2');
+                priceHeading.textContent = `$ ${item.price.toFixed(2)}`;
+                cartItemDiv.appendChild(priceHeading);
+
+                const deleteIcon = document.createElement('i');
+                deleteIcon.classList.add('fa-trash');
+                deleteIcon.textContent = '🗑️';
+                deleteIcon.addEventListener('click', () => delElement(index));
+                cartItemDiv.appendChild(deleteIcon);
+
+                cartElement.appendChild(cartItemDiv);
+            });
+
+            const totalElement = document.querySelector(".sidebar .totalPrice");
+            totalElement.textContent = `$ ${total.toFixed(2)}`;
+        }
+    </script>
+    
+</body>
+</html>
